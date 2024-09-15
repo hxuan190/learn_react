@@ -1,16 +1,33 @@
-  import { recipes } from './data.js';
-import { Recipe } from './types.js';
+import { useState } from 'react';
+interface Artist {
+  id: number;
+  name: string;
+}
 
-  export default function RecipeList() {
-    return (
-      <div>
-        <h1>Recipes</h1>
-        {recipes.map((recipe: Recipe) => <div key={recipe.id}>
-          <h2>{recipe.name}</h2>
-          <ul>
-            {recipe.ingredients.map((ingredient: string) => <li key={ingredient}>{ingredient}</li>)}
-          </ul>
-        </div>)}
-      </div>
-    );
-  }
+let nextId = 0;
+
+export default function List() {
+  const [name, setName] = useState('');
+  const [artists, setArtists] = useState<Artist[]>([]);
+
+  return (
+    <>
+      <h1>Inspiring sculptors:</h1>
+      <input
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+      <button onClick={() => {
+        artists.push({
+          id: nextId++,
+          name: name,
+        });
+      }}>Add</button>
+      <ul>
+        {artists.map(artist => (
+          <li key={artist.id}>{artist.name}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
