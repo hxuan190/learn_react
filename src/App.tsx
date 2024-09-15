@@ -1,31 +1,31 @@
 import { useState } from 'react';
 
+
 interface Artist {
   id: number;
   name: string;
 }
 
+
+let initialArtists  = [
+  { id: 0, name: 'Marta Colvin Andrade' },
+  { id: 1, name: 'Lamidi Olonade Fakeye'},
+  { id: 2, name: 'Louise Nevelson'},
+];
+
 let nextId = 0;
 
 export default function List() {
-  const [name, setName] = useState('');
   const [artists, setArtists] = useState<Artist[]>([]);
 
   return (
     <>
       <h1>Inspiring sculptors:</h1>
-      <input
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-      <button onClick={() => {
-        setArtists([...artists, { id: nextId++, name }]);
-      }}>Add</button>
-      <ul>
-        {artists.map(artist => (
-          <li key={artist.id}>{artist.name}</li>
-        ))}
-      </ul>
+      {artists.map((artist) => {
+        return <div key={artist.id}>{artist.name}{' '} <button onClick={() => {
+          setArtists(artists.filter(a => a.id !== artist.id));
+        }}></button></div>;
+      })}
     </>
   );
 }
