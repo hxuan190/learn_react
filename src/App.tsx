@@ -1,22 +1,24 @@
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 
-function MyInput(props) {
-  return <input {...props} />;
-}
-
-export default function MyForm() {
-  const inputRef = useRef(null);
-
-  function handleClick() {
-    inputRef.current.focus();
-  }
+export default function Counter() {
+  const [show, setShow] = useState(true);
+  const ref = useRef(null);
 
   return (
-    <>
-      <MyInput ref={inputRef} />
-      <button onClick={handleClick}>
-        Focus the input
+    <div>
+      <button
+        onClick={() => {
+          setShow(!show);
+        }}>
+        Toggle with setState
       </button>
-    </>
+      <button
+        onClick={() => {
+          ref.current.remove();
+        }}>
+        Remove from the DOM
+      </button>
+      {show && <p ref={ref}>Hello world</p>}
+    </div>
   );
 }
